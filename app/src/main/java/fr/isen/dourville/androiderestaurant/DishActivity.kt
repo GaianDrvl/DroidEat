@@ -2,15 +2,23 @@
 
 package fr.isen.dourville.androiderestaurant
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import fr.isen.dourville.androiderestaurant.databinding.ActivityDishBinding
+import fr.isen.dourville.androiderestaurant.model.DataResult
+import fr.isen.dourville.androiderestaurant.model.Dish
+import org.json.JSONObject
 
 private lateinit var binding: ActivityDishBinding
 
-class EntreeActivity : AppCompatActivity() {
+class DishActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish)
@@ -21,13 +29,45 @@ class EntreeActivity : AppCompatActivity() {
         //Title
         binding.categoryTitle.text = intent.getStringExtra("category")
 
+
+
+
         //Recycler View
-        val dishList = resources.getStringArray(R.array.dish_list).toList()
-        val recycler : RecyclerView = binding.dishRecycler
-        recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = MyAdapter(dishList)
+        loadData(intent.getStringExtra("category")?: "")
+
+
 
     }
 
+    private fun loadData(category: String){
+        val postUrl = "http://test.api.catering.bluecodegames.com/menu"
+        val requestQueue = Volley.newRequestQueue(this)
 
+        val postData = JSONObject()
+        postData.put("id_shop", "1")
+
+        val jsonObjectRequest = JsonObjectRequest(Request.Method.POST, postUrl, postData,{
+            val gson: DataResult = Gson().fromJson(it.toString(), DataResult::class.java)
+            gson.data.firstOrNull { it.name == category }?.dishes?.let { dishes ->
+                displayCategories(dishes)
+            }?: run{
+                Log.e("DishActivity", "Pas de categorie trouvée")
+            }
+
+        } ,{
+            Log.e("DishActivity", it.toString())
+            })
+
+        requestQueue.add(jsonObjectRequest)
+
+    }
+
+    private fun displayCategories(dishes : List<Dish>) {
+        binding.dishRecycler.layoutManager = LinearLayoutManager(this)
+        binding.dishRecycler.adapter = MyAdapter(dishes){
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("dish",it)
+            startActivity(intent)
+        }
+    }
 }

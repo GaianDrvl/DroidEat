@@ -18,10 +18,28 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnEntree.setOnClickListener {
-            val entree =  Intent(applicationContext, EntreeActivity::class.java)
+            val entree =  Intent(applicationContext, DishActivity::class.java)
             val key = "category"
 
             entree.putExtra(key, "Entrées");
+            startActivity(entree)
+
+        }
+
+        binding.btnPlat.setOnClickListener {
+            val entree =  Intent(applicationContext, DishActivity::class.java)
+            val key = "category"
+
+            entree.putExtra(key, "Plats");
+            startActivity(entree)
+
+        }
+
+        binding.btnDessert.setOnClickListener {
+            val entree =  Intent(applicationContext, DishActivity::class.java)
+            val key = "category"
+
+            entree.putExtra(key, "Desserts");
             startActivity(entree)
 
         }
