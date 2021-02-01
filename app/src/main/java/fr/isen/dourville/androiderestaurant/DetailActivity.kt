@@ -23,8 +23,17 @@ class DetailActivity : AppCompatActivity() {
 
         binding.listIngredients.text = dish?.ingredients?.map { it.name_fr }?.joinToString(", ")
 
-            val textView = findViewById<TextView>(R.id.dishTiltle)
+        val list = dish?.getAllPictures()?.toList()
+
+        val adapter = ViewPagerAdapter(supportFragmentManager)
 
 
+
+        for(i in 1..list!!.size) {
+            val fragment = DetailFragment.newInstance(list[i-1])
+            adapter.addFragment(fragment)
+        }
+
+        binding.carroussel.adapter = adapter
     }
 }
