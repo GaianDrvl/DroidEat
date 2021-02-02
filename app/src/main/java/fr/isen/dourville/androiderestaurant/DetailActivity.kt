@@ -27,11 +27,32 @@ class DetailActivity : AppCompatActivity() {
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
+        val basePrice: Double = dish!!.getPrice()
+
+        binding.price.text = basePrice.toString()
+
+        var quantity: Int = 1
 
 
-        for(i in 1..list!!.size) {
-            val fragment = DetailFragment.newInstance(list[i-1])
-            adapter.addFragment(fragment)
+        binding.plusBtn.setOnClickListener {
+            quantity++
+            var price = quantity * basePrice
+            binding.price.text = price.toString()
+        }
+
+        binding.minusBtn.setOnClickListener {
+            if (quantity > 1) {
+                quantity--
+            }
+            var price = quantity * basePrice
+            binding.price.text = price.toString()
+        }
+
+        if (!list.isNullOrEmpty()){
+            for (i in 1..list!!.size) {
+                val fragment = DetailFragment.newInstance(list[i - 1])
+                adapter.addFragment(fragment)
+            }
         }
 
         binding.carroussel.adapter = adapter

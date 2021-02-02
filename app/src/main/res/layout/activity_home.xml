@@ -47,14 +47,15 @@
         app:layout_constraintBottom_toTopOf="@+id/btnDessert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEntree" />
+        app:layout_constraintTop_toBottomOf="@+id/btnEntree"
+        app:layout_constraintVertical_bias="0.39" />
 
     <Button
         android:id="@+id/btnDessert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="156dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="57dp"
         android:layout_marginEnd="156dp"
         android:layout_marginBottom="184dp"
         android:backgroundTint="#FF34BD29"
