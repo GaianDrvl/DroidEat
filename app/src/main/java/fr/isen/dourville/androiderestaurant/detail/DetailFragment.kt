@@ -1,4 +1,4 @@
-package fr.isen.dourville.androiderestaurant
+package fr.isen.dourville.androiderestaurant.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
+import fr.isen.dourville.androiderestaurant.R
 import fr.isen.dourville.androiderestaurant.databinding.FragmentTemplateBinding
+import fr.isen.dourville.androiderestaurant.model.Dish
 
 private lateinit var binding: FragmentTemplateBinding
 
 private const val ARG_PARAM1 = "param1"
 
-class DetailFragment : Fragment() {
+class DetailFragment() : Fragment() {
 
     private var param1: String? = null
 
@@ -28,7 +30,9 @@ class DetailFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
         }
 
-        Picasso.get().load(param1).placeholder(R.drawable.wait).error(R.drawable.error).fit().into(binding.imgFragment)
+        Picasso.get().load(param1).placeholder(R.drawable.wait).error(
+            R.drawable.error
+        ).fit().into(binding.imgFragment)
 
     }
 

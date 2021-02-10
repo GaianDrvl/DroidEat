@@ -1,14 +1,23 @@
-package fr.isen.dourville.androiderestaurant
+package fr.isen.dourville.androiderestaurant.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
+import fr.isen.dourville.androiderestaurant.BaseActivity
+import fr.isen.dourville.androiderestaurant.R
+import fr.isen.dourville.androiderestaurant.ViewPagerAdapter
+import fr.isen.dourville.androiderestaurant.cart.Cart
+import fr.isen.dourville.androiderestaurant.cart.CartItem
 import fr.isen.dourville.androiderestaurant.databinding.ActivityDetailBinding
 import fr.isen.dourville.androiderestaurant.model.Dish
 
 private lateinit var binding: ActivityDetailBinding
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity() {
+
+    var quantity: Int = 1
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -25,13 +34,15 @@ class DetailActivity : AppCompatActivity() {
 
         val list = dish?.getAllPictures()?.toList()
 
-        val adapter = ViewPagerAdapter(supportFragmentManager)
+        val adapter = ViewPagerAdapter(
+            supportFragmentManager
+        )
 
         val basePrice: Double = dish!!.getPrice()
 
         binding.price.text = basePrice.toString()
 
-        var quantity: Int = 1
+
 
 
         binding.plusBtn.setOnClickListener {
@@ -48,13 +59,41 @@ class DetailActivity : AppCompatActivity() {
             binding.price.text = price.toString()
         }
 
+        binding.addCart.setOnClickListener {
+            addToCart(dish,quantity)
+        }
+
         if (!list.isNullOrEmpty()){
             for (i in 1..list!!.size) {
-                val fragment = DetailFragment.newInstance(list[i - 1])
+                val fragment =
+                    DetailFragment.newInstance(
+                        list[i - 1]
+                    )
                 adapter.addFragment(fragment)
             }
         }
 
         binding.carroussel.adapter = adapter
+    }
+
+    private fun addToCart(dish : Dish, quantity : Int){
+        val cart =
+            Cart.getCart(this)
+        cart.addItem(
+            CartItem(
+                dish,
+                quantity
+            )
+        )
+        cart.save(this)
+        refreshMenu(cart)
+        Snackbar.make(
+            binding.root,getString(
+                R.string.cart_validation), Snackbar.LENGTH_LONG).show()
+    }
+
+
+    private fun refreshMenu(cart: Cart){
+        invalidateOptionsMenu()
     }
 }

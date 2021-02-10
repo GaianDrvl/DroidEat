@@ -11,6 +11,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
+import fr.isen.dourville.androiderestaurant.detail.DetailActivity
 import fr.isen.dourville.androiderestaurant.databinding.ActivityDishBinding
 import fr.isen.dourville.androiderestaurant.model.DataResult
 import fr.isen.dourville.androiderestaurant.model.Dish
@@ -18,7 +19,7 @@ import org.json.JSONObject
 
 private lateinit var binding: ActivityDishBinding
 
-class DishActivity : AppCompatActivity() {
+class DishActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish)
