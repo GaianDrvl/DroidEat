@@ -64,7 +64,7 @@ class DetailActivity : BaseActivity() {
         }
 
         if (!list.isNullOrEmpty()){
-            for (i in 1..list!!.size) {
+            for (i in 1..list.size) {
                 val fragment =
                     DetailFragment.newInstance(
                         list[i - 1]

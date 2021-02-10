@@ -26,7 +26,7 @@
             app:destination="@id/FirstFragment" />
     </fragment>
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/FirstFragment2"
         android:name="fr.isen.dourville.androiderestaurant.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
@@ -36,7 +36,7 @@
             app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/SecondFragment2"
         android:name="fr.isen.dourville.androiderestaurant.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
